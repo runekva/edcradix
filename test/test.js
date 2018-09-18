@@ -1,7 +1,7 @@
 var assert = require('assert')
 var expect = require('chai').expect
 
-var normalizePort = require('../src/index.js')
+var normalizePort = require('../src/index.js');
 
 describe('normalizePort(val)', function () {
   it('should normalise sting 3000 to int 3000', function () {
