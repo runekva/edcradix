@@ -1,0 +1,28 @@
+apiVersion: radix.equinor.com/v1
+kind: RadixApplication
+metadata:
+  name: edcradix
+spec:
+  environments:
+    - name: development
+    - name: test
+    - name: production
+  components:
+    - name: radixquote
+      src: "."
+      ports:
+        - name: http
+          port: 3000
+      public: true
+      environmentVariables:
+        - environment: development
+          variables:
+            port: 3000
+        - environment: test
+          variables:
+            port: 3001
+        - environment: prodiction
+          variables:
+            port: 3002    
+      secrets:
+        - QUOTEKEY
