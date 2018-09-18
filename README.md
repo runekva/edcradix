@@ -1,6 +1,6 @@
 #  edcradix
 
-A Omnia Raix Example Application for EDC 2018
+A Omnia Raix Example Application for EDC 2018.
 - Single nodejs app requesting a famous quote from "Andrux Famous Quotes"
 - Multistage docker build with test
 
