@@ -21,7 +21,7 @@ spec:
         - environment: test
           variables:
             port: 3001
-        - environment: prodiction
+        - environment: production
           variables:
             port: 3002    
       secrets:
