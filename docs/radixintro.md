@@ -18,11 +18,11 @@ Your own precious developer laptop with the following installed and working
 * `docker`
 * Having a active account on `github.com` and a working `ssh` regime with github.com
 * `git` installed and working locally
-* `ssh-key` installed and working
+* `ssh-keygen` installed and working
 
 ## Who is this workshop for?
 
-Software developers. You have at least one echo system that you know quite good. You know git. You have some knowledge of Web development (http) You have played around with Docker. You are searching for a good way to deploy your applications and webservices. You want to get started - or continue with - CI/CD, and want this to be as easy as possible. You have at least one cool sticker on your laptop!
+Software developers & Coding Data Scientists.g You have at least one echo system that you know quite good. You know git. You have some knowledge of Web development (http) You have played around with Docker. You are searching for a good way to deploy your applications and webservices. You want to get started - or continue with - CI/CD, and want this to be as easy as possible. You have at least one cool sticker on your laptop!
 
 # Workshop script
 
