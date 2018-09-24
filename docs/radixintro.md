@@ -14,7 +14,7 @@ In the workshop, you can use any programming language that you want to as long a
 
 Your own precious developer laptop with the following installed and working
 
-* `Development echo system` of your choice (Node, Python, C#...). The examples in the workshop will be using node.js.
+* `Development ecoystem` of your choice (Node, Python, C#...). The examples in the workshop will be using node.js.
 * `docker`
 * Having a active account on `github.com` and a working `ssh` regime with github.com
 * `git` installed and working locally
@@ -22,13 +22,13 @@ Your own precious developer laptop with the following installed and working
 
 ## Who is this workshop for?
 
-Software developers & Coding Data Scientists.g You have at least one echo system that you know quite good. You know git. You have some knowledge of Web development (http) You have played around with Docker. You are searching for a good way to deploy your applications and webservices. You want to get started - or continue with - CI/CD, and want this to be as easy as possible. You have at least one cool sticker on your laptop!
+Software developers & Coding Data Scientists.g You have at least one ecosystem that you know quite good. You know git. You have some knowledge of Web development (http) You have played around with Docker. You are searching for a good way to deploy your applications and webservices. You want to get started - or continue with - CI/CD, and want this to be as easy as possible. You have at least one cool sticker on your laptop!
 
 # Workshop script
 
 The sections below contains a highlight of the various steps in the workshop. Please note that the `master` branch of `this` project contains the `final` code and that the code for each of the parts are available in ´separate branches´ named after the part. 
 
-If you want to follow the sequence of the workshop using a `Node.js´ echo system - follow the branches.
+If you want to follow the sequence of the workshop using a `Node.js´ ecosystem - follow the branches.
 
 For you own project, you may want to use feature branches (for the various parts) and merge into master as we move along.
 
@@ -42,7 +42,7 @@ If you want to move ahead using you own pace - feel free to do so ... support ma
 
 ## Part 1 - Getting ready
 
-> Objectives: Create a home for the project, prepare git and the development echo system and do a basic `hello world` app.
+> Objectives: Create a home for the project, prepare git and the development ecosystem and do a basic `hello world` app.
 
 A few commands & tasks:
 * mkdir
