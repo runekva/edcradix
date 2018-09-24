@@ -138,7 +138,7 @@ A few commands & tasks: (examples in the `part6` branch):
 > Objectives: Define Radix config, define application in Radix, connect Radix application to code on github
 
 A few commands & tasks: (examples in the `part7` branch):
-* Create the file `radixconfig.yml` in the local home dir of your project
+* Create the file `radixconfig.yaml` in the local home dir of your project
 * Define the projects Radix environment (start with one)
   * Example file: https://github.com/larskaare/edcradix/blob/part7/radixconfig.yaml
   * `yml` files and their parsers are known to be very picky and unforgiving 
@@ -164,7 +164,7 @@ A few commands & tasks: (examples in the `part7` branch):
 ### A few notes on the current version of Omnia Radix (Playground v1.5.0)
 
 * Approaching early & limited beta
-* The radixconfig.yml on the master branch is the master
+* The radixconfig.yaml on the master branch is the master
 * All changes are buildt and all images are deployed to all environments (this will evolve)
 * The build is currently not very fast
 * Radix will also provide easy support for basic monitoring and metrics. Not in scope for this workshop.
