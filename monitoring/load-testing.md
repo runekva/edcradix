@@ -7,7 +7,7 @@ There is a script in this folder that will fetch `https://radixquote-edcradix-pr
 We tell k6 to run 10 virtual users (--vus) for an average of ~3 requests per second and stop after 60 seconds.
 
 ```sh
-docker run -i loadimpact/k6 run --vus 10 --duration 60s -< k6-test-script.js
+docker run -i loadimpact/k6 run --vus 1 --duration 60s -< k6-test-script.js
 ```
 
 After the test is done k6 will output various statistics about latencies and statuses.
