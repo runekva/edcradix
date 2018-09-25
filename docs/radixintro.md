@@ -161,11 +161,21 @@ A few commands & tasks: (examples in the `part7` branch):
   * Examine logs
   * You may want to add the `secret` for the deploy key to make things work. Use the Radix web console to do this.
 
+
+## Part 8 - Monitoring & Metrics (tbd)
+
+> Objectives: Investigate the monitoring and metrics solution provided in Radix.
+
+* Instrumentation in code - exposed at /metrics end point
+* Figuring what to measure, why and how is the important and difficult task
+* Prometheus (https://prometheus.io/) - to scrape, store and make data available
+* Grafana (https://grafana.com/) - monitoring, query, visualisation, dashboards
+
+
 ### A few notes on the current version of Omnia Radix (Playground v1.5.0)
 
 * Approaching early & limited beta
 * The radixconfig.yaml on the master branch is the master
 * All changes are buildt and all images are deployed to all environments (this will evolve)
 * The build is currently not very fast
-* Radix will also provide easy support for basic monitoring and metrics. Not in scope for this workshop.
-
+* Support for logging will come.
