@@ -24,14 +24,6 @@ const httpRequestDurationMicroseconds = new promclient.Histogram({
     buckets: [5, 15, 50, 100, 200, 300, 400, 600, 800, 1000, 1600, 3200, 6400]
 });
 
-// Counter to keep track of requests and status codes to third party services
-const httpRequests = new promclient.Counter({
-    name: 'http_request',
-    labelNames: ['route', 'code'],
-    help: 'Number of HTTP requests, with status codes'
-});
-
-
 //Defining the options for the Quote post
 var quoteUrlOptions = {
     url: 'https://andruxnet-random-famous-quotes.p.mashape.com/',
@@ -53,9 +45,6 @@ app.get('/', (req, res) => {
     request.post(quoteUrlOptions, function (error, response, body) {
 
         if(!error){
-            // Record request count and status code
-            httpRequests.inc({ route: quoteUrlOptions.url, code: response.statusCode });
-
             // Record request durations in buckets
             httpRequestDurationMicroseconds
                 .labels(quoteUrlOptions.url, response.statusCode)
