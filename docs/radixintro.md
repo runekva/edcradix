@@ -34,6 +34,8 @@ For you own project, you may want to use feature branches (for the various parts
 
 If you want to move ahead using you own pace - feel free to do so ... support may be limited :)
 
+>If you want to work actively with the example projet (this), I suggest forking it and rename it.
+
 ## Before start
 
 * > Instructor will add your shortname to proper AD groups to allow access to the Radix environment
@@ -141,6 +143,7 @@ A few commands & tasks: (examples in the `part7` branch):
 * Create the file `radixconfig.yaml` in the local home dir of your project
 * Define the projects Radix environment (start with one)
   * Example file: https://github.com/larskaare/edcradix/blob/part7/radixconfig.yaml
+  * Documentation: https://github.com/Statoil/radix-operator/blob/master/docs/radixconfig.md
   * `yml` files and their parsers are known to be very picky and unforgiving 
 * Do git add, commit and push to github.com (origin)
 * Generate Radix deployment key
