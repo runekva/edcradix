@@ -161,6 +161,32 @@ A few commands & tasks: (examples in the `part7` branch):
   * Examine logs
   * You may want to add the `secret` for the deploy key to make things work. Use the Radix web console to do this.
 
+## Part 8 - Instrument and monitor application
+
+> Objectives: Get to know the built-in metrics Radix gives you. Sneak peak on how to add custom instrumentation and dashboards.
+
+> Right now we have to manually create the ServiceMonitor that tells Prometheus how to monitor an application. If using another application than what is already set up below, make sure to edit `monitoring/servicemonitor.yaml` and add it to the `default` namespace of the Kubernetes cluster.
+
+For this we use the EDC Radix app in the production environment ( https://radixquote-edcradix-production.playground-v1-5-0.dev.radix.equinor.com )
+
+1. Open relevant dashboards:
+    - [Radix Application Overview](https://grafana.playground-v1-5-0.dev.radix.equinor.com/d/L-uZ0NAiz/radix-application-overview?refresh=2s&orgId=1&from=now-30m&to=now-1s&var-Namespace=edcradix-production&var-Upstream=edcradix-production-radixquote-3000&var-Rate_Interval=1m)
+    - [Radix EDC 2018 Internals](https://grafana.playground-v1-5-0.dev.radix.equinor.com/d/8NKFEKAmk/radix-edc-2018?orgId=1&var-Namespace=edcradix-production)
+
+2. Start load generator in background:
+```
+cd monitoring
+docker run -i loadimpact/k6 run --vus 5 --duration 300s -< k6-test-script.js
+```
+
+3. Watch the graphs update!
+
+If the live graphs for some reason should not work, here are two screenshots showing them in action:
+
+![Radix Application Overview](radix-application-overview.png "Radix Application Overview")
+
+![Radix EDC Dashboard](radix-edc.png "Radix EDC Dashboard")
+
 ### A few notes on the current version of Omnia Radix (Playground v1.5.0)
 
 * Approaching early & limited beta
