@@ -1,19 +1,18 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: edcradix-stian
-  # namespace: edcradix-stian-development
+  name: edcradix
   labels:
     prometheus: playground-v1-5-0-dev
 spec:
   endpoints:
   - interval: 2s
     port: http
-  jobLabel: edcradix-stian-development
+  jobLabel: edcradix-production
   namespaceSelector:
     matchNames:
-    - edcradix-stian-development
+    - edcradix-production
   selector:
     matchLabels:
-      radixApp: edcradix-stian
+      radixApp: edcradix
       radixComponent: radixquote
