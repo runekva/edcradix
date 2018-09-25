@@ -12,15 +12,15 @@ var apiKey = process.env.QUOTEKEY;
 //Getting port and normalizing value
 var port = normalizePort(process.env.PORT || '3000');
 
-// Collect metrics every 5000ms
+// Collect default NodeJS metrics every 5000ms
 promclient.collectDefaultMetrics({ timeout: 5000 });
 
 // Histogram to keep track of API requests to third party services
 const httpRequestDurationMicroseconds = new promclient.Histogram({
     name: 'http_request_duration_ms',
     help: 'Duration of HTTP requests in ms',
-    labelNames: ['route'],
-    // buckets for response time from 0.1ms to 500ms
+    labelNames: ['route', 'code'],
+    // buckets for response times from 5ms to 6400, increasingly spaced
     buckets: [5, 15, 50, 100, 200, 300, 400, 600, 800, 1000, 1600, 3200, 6400]
 });
 
@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
 
             // Record request durations in buckets
             httpRequestDurationMicroseconds
-                .labels(quoteUrlOptions.url)
+                .labels(quoteUrlOptions.url, response.statusCode)
                 .observe(response.timingPhases.total)
         }
 
@@ -79,6 +79,7 @@ app.get('/', (req, res) => {
     })
 });
 
+// Expose Prometheus-formatted metrics for scraping
 app.get('/metrics', (req, res) => {
     res.set('Content-Type', promclient.register.contentType)
     res.end(promclient.register.metrics())
