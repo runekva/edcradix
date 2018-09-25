@@ -1,5 +1,8 @@
 var express = require('express');
 var request = require('request');
+const promclient = require('prom-client');
+
+const collectDefaultMetrics = promclient.collectDefaultMetrics;
 
 var app = express();
 
@@ -8,6 +11,18 @@ var apiKey = process.env.QUOTEKEY;
 
 //Getting port and normalizing value
 var port = normalizePort(process.env.PORT || '3000');
+
+// Collect default NodeJS metrics every 5000ms
+promclient.collectDefaultMetrics({ timeout: 5000 });
+
+// Histogram to keep track of API requests to third party services
+const httpRequestDurationMicroseconds = new promclient.Histogram({
+    name: 'http_request_duration_ms',
+    help: 'Duration of HTTP requests in ms',
+    labelNames: ['route', 'code'],
+    // buckets for response times from 5ms to 6400, increasingly spaced
+    buckets: [5, 15, 50, 100, 200, 300, 400, 600, 800, 1000, 1600, 3200, 6400]
+});
 
 //Defining the options for the Quote post
 var quoteUrlOptions = {
@@ -20,17 +35,23 @@ var quoteUrlOptions = {
     form: {
         cat: 'famous',
         count: 1
-    }
+    },
+    time: true
 };
 
 //Default entrypoint for the root
 //Requesting root will cause a quote to be requested
 app.get('/', (req, res) => {
     request.post(quoteUrlOptions, function (error, response, body) {
-        if (error) {
-            console.log('Error getting quote : ', error)
-            res.send('No quote available ... wonder why?')
-        } else {
+
+        if(!error){
+            // Record request durations in buckets
+            httpRequestDurationMicroseconds
+                .labels(quoteUrlOptions.url, response.statusCode)
+                .observe(response.timingPhases.total)
+        }
+
+        if ( !error && response.statusCode >= 200 && response.statusCode <= 399) { // If HTTP status code in reply is between 200 and 399
             console.log('Got response: ' + body)
 
             var qTxt = JSON.parse(body)
@@ -40,8 +61,17 @@ app.get('/', (req, res) => {
             } else {
                 res.send(body)
             }
+        }else{
+            console.log('Error getting quote : ', error)
+            res.status(500).send('No quote available ... wonder why?')
         }
     })
+});
+
+// Expose Prometheus-formatted metrics for scraping
+app.get('/metrics', (req, res) => {
+    res.set('Content-Type', promclient.register.contentType)
+    res.end(promclient.register.metrics())
 });
 
 // Normalise the webserver port
