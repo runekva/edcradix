@@ -1,5 +1,8 @@
 var express = require('express');
 var request = require('request');
+const promclient = require('prom-client');
+
+const collectDefaultMetrics = promclient.collectDefaultMetrics;
 
 var app = express();
 
@@ -8,6 +11,26 @@ var apiKey = process.env.QUOTEKEY;
 
 //Getting port and normalizing value
 var port = normalizePort(process.env.PORT || '3000');
+
+// Collect metrics every 5000ms
+promclient.collectDefaultMetrics({ timeout: 5000 });
+
+// Histogram to keep track of API requests to third party services
+const httpRequestDurationMicroseconds = new promclient.Histogram({
+    name: 'http_request_duration_ms',
+    help: 'Duration of HTTP requests in ms',
+    labelNames: ['route'],
+    // buckets for response time from 0.1ms to 500ms
+    buckets: [5, 15, 50, 100, 200, 300, 400, 600, 800, 1000, 1600, 3200, 6400]
+});
+
+// Counter to keep track of requests and status codes to third party services
+const httpRequests = new promclient.Counter({
+    name: 'http_request',
+    labelNames: ['route', 'code'],
+    help: 'Number of HTTP requests, with status codes'
+});
+
 
 //Defining the options for the Quote post
 var quoteUrlOptions = {
@@ -20,14 +43,26 @@ var quoteUrlOptions = {
     form: {
         cat: 'famous',
         count: 1
-    }
+    },
+    time: true
 };
 
 //Default entrypoint for the root
 //Requesting root will cause a quote to be requested
 app.get('/', (req, res) => {
     request.post(quoteUrlOptions, function (error, response, body) {
-       if ( !error && response.statusCode >= 200 && response.statusCode <= 399) { // If HTTP status code in reply is between 200 and 399
+
+        if(!error){
+            // Record request count and status code
+            httpRequests.inc({ route: quoteUrlOptions.url, code: response.statusCode });
+
+            // Record request durations in buckets
+            httpRequestDurationMicroseconds
+                .labels(quoteUrlOptions.url)
+                .observe(response.timingPhases.total)
+        }
+
+        if ( !error && response.statusCode >= 200 && response.statusCode <= 399) { // If HTTP status code in reply is between 200 and 399
             console.log('Got response: ' + body)
 
             var qTxt = JSON.parse(body)
@@ -42,6 +77,11 @@ app.get('/', (req, res) => {
             res.status(500).send('No quote available ... wonder why?')
         }
     })
+});
+
+app.get('/metrics', (req, res) => {
+    res.set('Content-Type', promclient.register.contentType)
+    res.end(promclient.register.metrics())
 });
 
 // Normalise the webserver port
