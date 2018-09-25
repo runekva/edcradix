@@ -20,4 +20,3 @@ A Omnia Raix Example Application for EDC 2018
 `docker run -p 3000:3000 --env QUOTEKEY=<> <imagename>`  
 
 The QUOTEKEY is the apikey from https://market.mashape.com/andruxnet/random-famous-quotes
-
