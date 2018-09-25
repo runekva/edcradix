@@ -27,10 +27,7 @@ var quoteUrlOptions = {
 //Requesting root will cause a quote to be requested
 app.get('/', (req, res) => {
     request.post(quoteUrlOptions, function (error, response, body) {
-        if (error) {
-            console.log('Error getting quote : ', error)
-            res.send('No quote available ... wonder why?')
-        } else {
+       if ( !error && response.statusCode >= 200 && response.statusCode <= 399) { // If HTTP status code in reply is between 200 and 399
             console.log('Got response: ' + body)
 
             var qTxt = JSON.parse(body)
@@ -40,6 +37,9 @@ app.get('/', (req, res) => {
             } else {
                 res.send(body)
             }
+        }else{
+            console.log('Error getting quote : ', error)
+            res.status(500).send('No quote available ... wonder why?')
         }
     })
 });
