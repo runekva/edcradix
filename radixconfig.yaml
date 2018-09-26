@@ -6,6 +6,7 @@ spec:
   environments:
     - name: development
     - name: test
+    - name: production
   components:
     - name: radixquote
       src: "."
