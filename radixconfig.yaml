@@ -1,7 +1,7 @@
 apiVersion: radix.equinor.com/v1
 kind: RadixApplication
 metadata:
-  name: edcradix-ruk
+  name: edcradix-ruk1
 spec:
   environments:
     - name: development
